@@ -1,0 +1,16 @@
+{% extends "Enqueter/base.html" %}
+{% block titre %}{{ page_title }} | PrixMarché{% endblock %}
+{% block contenu %}
+<section class="form-panel">
+    <h1>{{ page_title }}</h1>
+    <p>L’enquêteur associé à votre compte sera enregistré comme auteur du relevé.</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="actions">
+            <button type="submit">Enregistrer</button>
+            <a class="button button-light" href="{{ cancel_url }}">Annuler</a>
+        </div>
+    </form>
+</section>
+{% endblock %}

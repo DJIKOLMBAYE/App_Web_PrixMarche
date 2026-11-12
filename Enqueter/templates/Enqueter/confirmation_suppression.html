@@ -1,0 +1,15 @@
+{% extends "Enqueter/base.html" %}
+{% block titre %}{{ page_title }} | PrixMarché{% endblock %}
+{% block contenu %}
+<section class="form-panel">
+    <h1>{{ page_title }}</h1>
+    <p>Confirmer la suppression de <strong>{{ object }}</strong> ?</p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="actions">
+            <button class="button-danger" type="submit">Confirmer la suppression</button>
+            <a class="button button-light" href="{{ cancel_url }}">Annuler</a>
+        </div>
+    </form>
+</section>
+{% endblock %}

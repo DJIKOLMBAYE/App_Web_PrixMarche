@@ -1,0 +1,36 @@
+{% extends "Enqueter/base.html" %}
+{% block titre %}Marchés | PrixMarché{% endblock %}
+{% block contenu %}
+<header class="page-heading">
+    <div>
+        <h1>Marchés</h1>
+        <p>Référentiel des marchés observés.</p>
+    </div>
+    <a class="button" href="{% url 'marche_create' %}">Ajouter un marché</a>
+</header>
+{% if marches %}
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>Code</th><th>Nom</th><th>Ville</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+                {% for marche in marches %}
+                    <tr>
+                        <td>{{ marche.code_marche }}</td>
+                        <td>{{ marche.nom_marche }}</td>
+                        <td>{{ marche.ville }}</td>
+                        <td class="actions">
+                            <a href="{% url 'marche_detail' marche.pk %}">Consulter</a>
+                            <a href="{% url 'marche_update' marche.pk %}">Modifier</a>
+                            <a href="{% url 'marche_delete' marche.pk %}">Supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <p class="empty">Aucun marché enregistré.</p>
+{% endif %}
+{% endblock %}

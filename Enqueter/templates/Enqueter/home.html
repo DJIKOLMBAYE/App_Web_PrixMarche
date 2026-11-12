@@ -1,0 +1,26 @@
+{% extends "Enqueter/base.html" %}
+{% block titre %}Accueil | PrixMarché{% endblock %}
+{% block contenu %}
+<header class="page-heading">
+    <div>
+        <h1>Tableau de bord</h1>
+        <p>Bonjour {{ request.user.get_username }}, bienvenue sur PrixMarché.</p>
+    </div>
+</header>
+{% if not request.user.enqueteur %}
+    <p class="message message-warning" role="status">
+        Votre compte n’est pas encore associé à un enquêteur. Contactez un administrateur
+        pour pouvoir saisir des relevés.
+    </p>
+{% endif %}
+<section class="cards" aria-label="Résumé des données">
+    <div class="card">Marchés<strong>{{ marche_count }}</strong></div>
+    <div class="card">Produits<strong>{{ produit_count }}</strong></div>
+    <div class="card">Enquêteurs<strong>{{ enqueteur_count }}</strong></div>
+    <div class="card">Affectations<strong>{{ affectation_count }}</strong></div>
+    <div class="card">Relevés<strong>{{ releve_count }}</strong></div>
+</section>
+{% if request.user.is_staff %}
+    <p><a class="button button-light" href="{% url 'admin:index' %}">Administration Django</a></p>
+{% endif %}
+{% endblock %}

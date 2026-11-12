@@ -1,0 +1,14 @@
+{% extends "Enqueter/base.html" %}
+{% block titre %}Créer un compte | PrixMarché{% endblock %}
+{% block contenu %}
+<section class="form-panel">
+    <h1>Créer un compte enquêteur</h1>
+    <p>Votre profil enquêteur sera associé à ce compte pour authentifier vos relevés.</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Créer mon compte</button>
+    </form>
+    <p>Vous avez déjà un compte ? <a href="{% url 'login' %}">Se connecter</a>.</p>
+</section>
+{% endblock %}

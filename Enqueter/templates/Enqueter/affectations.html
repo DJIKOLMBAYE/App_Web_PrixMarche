@@ -1,0 +1,36 @@
+{% extends "Enqueter/base.html" %}
+{% block titre %}Affectations | PrixMarché{% endblock %}
+{% block contenu %}
+<header class="page-heading">
+    <div>
+        <h1>Affectations</h1>
+        <p>Marchés attribués aux enquêteurs.</p>
+    </div>
+    <a class="button" href="{% url 'affectation_create' %}">Ajouter une affectation</a>
+</header>
+{% if affectations %}
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>Enquêteur</th><th>Marché</th><th>Date de début</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+                {% for affectation in affectations %}
+                    <tr>
+                        <td>{{ affectation.enqueteur }}</td>
+                        <td>{{ affectation.marche }}</td>
+                        <td>{{ affectation.date_debut|date:"d/m/Y" }}</td>
+                        <td class="actions">
+                            <a href="{% url 'affectation_detail' affectation.pk %}">Consulter</a>
+                            <a href="{% url 'affectation_update' affectation.pk %}">Modifier</a>
+                            <a href="{% url 'affectation_delete' affectation.pk %}">Supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <p class="empty">Aucune affectation enregistrée.</p>
+{% endif %}
+{% endblock %}

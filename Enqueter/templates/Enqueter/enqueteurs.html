@@ -1,0 +1,37 @@
+{% extends "Enqueter/base.html" %}
+{% block titre %}Enquêteurs | PrixMarché{% endblock %}
+{% block contenu %}
+<header class="page-heading">
+    <div>
+        <h1>Enquêteurs</h1>
+        <p>Les comptes associés peuvent saisir des relevés en leur propre nom.</p>
+    </div>
+    <a class="button" href="{% url 'enqueteur_create' %}">Ajouter un enquêteur</a>
+</header>
+{% if enqueteurs %}
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>Matricule</th><th>Nom</th><th>Téléphone</th><th>Compte</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+                {% for enqueteur in enqueteurs %}
+                    <tr>
+                        <td>{{ enqueteur.matricule }}</td>
+                        <td>{{ enqueteur.nom_enq }}</td>
+                        <td>{{ enqueteur.telephone|default:"—" }}</td>
+                        <td>{{ enqueteur.user|default:"—" }}</td>
+                        <td class="actions">
+                            <a href="{% url 'enqueteur_detail' enqueteur.pk %}">Consulter</a>
+                            <a href="{% url 'enqueteur_update' enqueteur.pk %}">Modifier</a>
+                            <a href="{% url 'enqueteur_delete' enqueteur.pk %}">Supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <p class="empty">Aucun enquêteur enregistré.</p>
+{% endif %}
+{% endblock %}

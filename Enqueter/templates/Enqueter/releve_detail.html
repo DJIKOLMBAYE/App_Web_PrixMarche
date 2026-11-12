@@ -1,0 +1,21 @@
+{% extends "Enqueter/base.html" %}
+{% block titre %}Détail du relevé | PrixMarché{% endblock %}
+{% block contenu %}
+<section class="panel">
+    <h1>Détail du relevé n°{{ releve.num_releve }}</h1>
+    <dl>
+        <dt>Date</dt><dd>{{ releve.date_releve|date:"d/m/Y" }}</dd>
+        <dt>Produit</dt><dd>{{ releve.produit.libelle }} ({{ releve.produit.get_unite_display }})</dd>
+        <dt>Marché</dt><dd>{{ releve.marche.nom_marche }} — {{ releve.marche.ville }}</dd>
+        <dt>Enquêteur</dt><dd>{{ releve.enqueteur }}</dd>
+        <dt>Prix</dt><dd>{{ releve.prix }} FCFA</dd>
+    </dl>
+    <div class="actions">
+        <a class="button button-light" href="{% url 'releve_list' %}">Retour aux relevés</a>
+        {% if request.user.is_staff or releve.enqueteur.user_id == request.user.id %}
+            <a class="button" href="{% url 'releve_update' releve.pk %}">Modifier</a>
+            <a class="button button-danger" href="{% url 'releve_delete' releve.pk %}">Supprimer</a>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

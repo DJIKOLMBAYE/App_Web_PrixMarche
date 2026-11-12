@@ -1,0 +1,43 @@
+{% extends "Enqueter/base.html" %}
+{% block titre %}Relevés | PrixMarché{% endblock %}
+{% block contenu %}
+<header class="page-heading">
+    <div>
+        <h1>Relevés de marché</h1>
+        <p>Consultez les prix enregistrés et gérez vos relevés.</p>
+    </div>
+    <a class="button" href="{% url 'releve_create' %}">Ajouter un relevé</a>
+</header>
+{% if releves %}
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th><th>Produit</th><th>Marché</th><th>Enquêteur</th>
+                    <th>Prix</th><th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for releve in releves %}
+                    <tr>
+                        <td>{{ releve.date_releve|date:"d/m/Y" }}</td>
+                        <td>{{ releve.produit.libelle }}</td>
+                        <td>{{ releve.marche }}</td>
+                        <td>{{ releve.enqueteur }}</td>
+                        <td>{{ releve.prix }} FCFA</td>
+                        <td class="actions">
+                            <a href="{% url 'releve_detail' releve.pk %}">Consulter</a>
+                            {% if request.user.is_staff or releve.enqueteur.user_id == request.user.id %}
+                                <a href="{% url 'releve_update' releve.pk %}">Modifier</a>
+                                <a href="{% url 'releve_delete' releve.pk %}">Supprimer</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <p class="empty">Aucun relevé n’a encore été saisi.</p>
+{% endif %}
+{% endblock %}

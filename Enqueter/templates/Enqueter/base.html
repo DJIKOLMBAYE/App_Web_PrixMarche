@@ -1,0 +1,44 @@
+{% load static %}
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block titre %}PrixMarché{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'Enqueter/site.css' %}">
+</head>
+<body>
+<header class="site-header">
+    <a class="brand" href="{% url 'home' %}">PrixMarché</a>
+    {% if request.user.is_authenticated %}
+        <nav aria-label="Navigation principale">
+            <a href="{% url 'home' %}">Accueil</a>
+            <a href="{% url 'produits' %}">Produits</a>
+            <a href="{% url 'marches' %}">Marchés</a>
+            <a href="{% url 'enqueteurs' %}">Enquêteurs</a>
+            <a href="{% url 'affectations' %}">Affectations</a>
+            <a href="{% url 'releve_list' %}">Relevés</a>
+            {% if request.user.is_staff %}
+                <a href="{% url 'admin:index' %}">Administration</a>
+            {% endif %}
+        </nav>
+        <div class="session-actions">
+            <span>{{ request.user.get_username }}</span>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button class="button button-light" type="submit">Se déconnecter</button>
+            </form>
+        </div>
+    {% else %}
+        <a href="{% url 'login' %}">Se connecter</a>
+    {% endif %}
+</header>
+<main class="container">
+    {% for message in messages %}
+        <p class="message message-{{ message.tags }}" role="status">{{ message }}</p>
+    {% endfor %}
+    {% block contenu %}{% endblock %}
+</main>
+<footer class="site-footer">PrixMarché · Suivi des prix sur les marchés</footer>
+</body>
+</html>
